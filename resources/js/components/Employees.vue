@@ -25,19 +25,23 @@
               </thead>
               <tbody>
                 <tr v-for="employee in employees.data" :key="employee.id">
-                  
-                  <td>{{employee.firstname}}</td>
-                <!--   Below v-if are used to shorten the text of description -->
-                <td>{{employee.lastname}}</td>
-                 
-                   
-                    <td>{{employee.company.name}}</td>
-                      <td>{{employee.email}}</td>
-                        <td>{{employee.phone}}</td>
+                  <td>{{ employee.firstname }}</td>
+                  <!--   Below v-if are used to shorten the text of description -->
+                  <td>{{ employee.lastname }}</td>
+
+                  <td v-if="employee.company.name !== null">
+                    {{ employee.company.name }}
+                  </td>
+                  <td v-else>{{ "Not available" }}</td>
+                  <td>{{ employee.email }}</td>
+                  <td>{{ employee.phone }}</td>
 
                   <td>
                     <a href="#">
-                      <i class="fa fa-edit blue" @click="editModal(employee)"></i>
+                      <i
+                        class="fa fa-edit blue"
+                        @click="editModal(employee)"
+                      ></i>
                     </a>
                     <a href="#" @click="deleteEmployee(employee.id)">
                       <i class="fa fa-trash red"></i>
@@ -48,13 +52,12 @@
             </table>
           </div>
           <!-- /.card-body -->
-           <div class="card-footer">
-                  <pagination :data="employees" @pagination-change-page="getResults"></pagination>
-              </div>
-
-
-
-
+          <div class="card-footer">
+            <pagination
+              :data="employees"
+              @pagination-change-page="getResults"
+            ></pagination>
+          </div>
         </div>
         <!-- /.card -->
       </div>
@@ -71,8 +74,12 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addCourseModalLabel">Add Employee</h5>
-            <!--  <h5 class="modal-title" v-show="editMode" id="exampleModalLabel">Update Series</h5> -->
+            <h5 class="modal-title" v-show="!editMode" id="addCourseModalLabel">
+              Add Employee
+            </h5>
+            <h5 class="modal-title" v-show="editMode" id="exampleModalLabel">
+              Update Employee
+            </h5>
             <button
               type="button"
               class="close"
@@ -84,7 +91,9 @@
           </div>
           <div class="modal-body">
             <!-- form start -->
-            <form @submit.prevent="editMode ? updateEmployee() :  CreateEmployee()">
+            <form
+              @submit.prevent="editMode ? updateEmployee() : CreateEmployee()"
+            >
               <div class="form-group">
                 <label for="Name" class="col-form-label">First Name</label>
                 <div class="">
@@ -98,11 +107,13 @@
                     :class="{ 'is-invalid': form.errors.has('firstname') }"
                   />
                   <HasError :form="form" field="firstname" />
-                 <!--  //last added this -->
-                <div v-if="errors && errors.firstname" class="text-danger">{{ errors.firstname[0] }}</div>
+                  <!--  //last added this -->
+                  <div v-if="errors && errors.firstname" class="text-danger">
+                    {{ errors.firstname[0] }}
+                  </div>
                 </div>
               </div>
-          <div class="form-group">
+              <div class="form-group">
                 <label for="Name" class="col-form-label">First Name</label>
                 <div class="">
                   <input
@@ -115,27 +126,37 @@
                     :class="{ 'is-invalid': form.errors.has('lastname') }"
                   />
                   <HasError :form="form" field="lastname" />
-                 <!--  //last added this -->
-                <div v-if="errors && errors.lastname" class="text-danger">{{ errors.lastname[0] }}</div>
+                  <!--  //last added this -->
+                  <div v-if="errors && errors.lastname" class="text-danger">
+                    {{ errors.lastname[0] }}
+                  </div>
                 </div>
               </div>
 
-            
-               <div class="form-group">
-              <label for="Company" class="col-form-label">Select Company</label>
-        <select v-model="form.company" name="company" id="company" class="form-control">
-            <option v-for="company in companies.data" :value="company.id" :key="company.id"
-             :selected ="company.name">{{ company.name }}</option>
-              </select>
-        </div>
-
-
-
+              <div class="form-group">
+                <label for="Company" class="col-form-label"
+                  >Select Company</label
+                >
+                <select
+                  v-model="form.company"
+                  name="company"
+                  id="company"
+                  class="form-control"
+                  required
+                >
+                  <option
+                    v-for="company in companies.data"
+                    :value="company.id"
+                    :key="company.id"
+                    :selected="company.name"
+                  >
+                    {{ company.name }}
+                  </option>
+                </select>
+              </div>
 
               <div class="form-group">
-                <label for="Description" class="col-form-label"
-                  >Email</label
-                >
+                <label for="Description" class="col-form-label">Email</label>
                 <div class="">
                   <input
                     v-model="form.email"
@@ -146,14 +167,14 @@
                     placeholder="Email"
                   />
                   <HasError :form="form" field="email" />
-                    <div v-if="errors && errors.email" class="text-danger">{{ errors.email[0] }}</div>
+                  <div v-if="errors && errors.email" class="text-danger">
+                    {{ errors.email[0] }}
+                  </div>
                 </div>
               </div>
-              
+
               <div class="form-group">
-                <label for="Description" class="col-form-label"
-                  >Phone</label
-                >
+                <label for="Description" class="col-form-label">Phone</label>
                 <div class="">
                   <input
                     v-model="form.phone"
@@ -164,7 +185,9 @@
                     placeholder="Phone"
                   />
                   <HasError :form="form" field="phone" />
-                    <div v-if="errors && errors.phone" class="text-danger">{{ errors.phone[0] }}</div>
+                  <div v-if="errors && errors.phone" class="text-danger">
+                    {{ errors.phone[0] }}
+                  </div>
                 </div>
               </div>
 
@@ -176,8 +199,15 @@
                 >
                   Close
                 </button>
-                <button type="submit" class="btn btn-primary">
+                <button
+                  v-show="!editMode"
+                  type="submit"
+                  class="btn btn-primary"
+                >
                   Save changes
+                </button>
+                <button v-show="editMode" type="submit" class="btn btn-primary">
+                  Update changes
                 </button>
               </div>
             </form>
@@ -193,180 +223,118 @@ import Form from "vform";
 import axios from "axios";
 export default {
   data() {
-    
     return {
-     errors: {},
-       employees: {},
-       results:{},
-       companies:[],
-       //used EditMode here beacuse I am using one popup modal for both create and update forms
-       //So edit mode is used 
+      errors: {},
+      employees: {},
+      results: {},
+      companies: [],
+
       editMode: false,
       form: new Form({
         id: "",
-       firstname: "",
-       lastname: "",
-       company:"",
+        firstname: "",
+        lastname: "",
+        company: "",
         email: "",
-        phone:"",
-        
-      
+        phone: "",
       }),
     };
   },
 
   methods: {
-          getResults(page = 1) {
-        axios.get('api/employees?page=' + page)
-            .then(response => {
-                this.employees = response.data;
-                   });
-                },
-      updateEmployee(){
- 
-            this.errors = {};
-            //I am sending the form values using append method becuse the ther ways were not working for put action
-            //after appending the form values i am sending them as argument in axios.post
-         let formData = new FormData();
-          formData.append('firstname', this.form.firstname);
-           formData.append('lastname', this.form.lastname);
-          if (! this.form.company) {
-          formData.append('company', '');
+    getResults(page = 1) {
+      axios.get("api/employees?page=" + page).then((response) => {
+        this.employees = response.data;
+      });
+    },
+    updateEmployee() {
+      this.errors = {};
+      let formData = new FormData();
+      formData.append("firstname", this.form.firstname);
+      formData.append("lastname", this.form.lastname);
+      if (!this.form.company) {
+        formData.append("company", "");
+      } else {
+        formData.append("company", this.form.company);
+      }
+      if (!this.form.email) {
+        formData.append("email", "");
+      } else {
+        formData.append("email", this.form.email);
+      }
+      if (!this.form.phone) {
+        formData.append("phone", "");
+      } else {
+        formData.append("phone", this.form.phone);
+      }
 
-          }
-          else {
-
-         formData.append('company', this.form.company);
-
-
-          }
-          if (! this.form.email) {
-          formData.append('email', '');
-
-          }
-          else {
-
-         formData.append('email', this.form.email);
-
-
-          }
-           if (! this.form.phone) {
-          formData.append('phone', '');
-
-          }
-          else {
-
-         formData.append('phone', this.form.phone);
-
-
-          }
-          
-          formData.append('_method', 'put');
+      formData.append("_method", "put");
       // console.log(formData.append('file',this.file));
 
-          //   console.log(this.form.email);
-           //  console.log(this.form.website);
+      //   console.log(this.form.email);
+      //  console.log(this.form.website);
 
+      this.$Progress.start();
+      
+      axios
+        .post("api/employees/" + this.form.id, formData)
 
+        .then(() => {
+          $("#addCourse").modal("hide");
+          this.form.errors.clear();
 
-             this.$Progress.start();
-           //here i have used the post way of axios as put does not work 
-           //to tell about the put method i have declared the put in the append above like we do in laravel
+          Swal.fire("updated!", "employee Updated Successfully.", "success");
 
-                axios.post('api/employees/' +this.form.id,formData)
-
-               .then(()=>{
-                    $('#addCourse').modal('hide');
-                     this.form.errors.clear();
-
-                 Swal.fire(
-                        'updated!',
-                        'employee Updated Successfully.',
-                        'success'
-                        )
-
-                   this.$Progress.finish();
-                   //last added this
-                   this.form.errors.clear();
-                       this.getEmployeesList();
-               })
-               /* .catch((error)=>{
-                 this.errors = errors.response.data.errors
-                 Swal.fire("Failed","Something went wrong!","warning")
-
-
-               }) */
-
-               //last added this
-               .catch(error => {
+          this.$Progress.finish();
+          //last added this
+          this.form.errors.clear();
+          this.getEmployeesList();
+        })
+      
+        //last added this
+        .catch((error) => {
           this.loaded = true;
-          //I have used this IF condition here becuase VForm error message was not displaying on validation 
-          //failure....VFORM valiation error were showing only this.form.post but not on axios.post so 
-          //I used this way to grab the errors and shows them in the form using this below way
-             /*  <div v-if="errors && errors.description" class="text-danger">{{ errors.description[0] }}</div> */
+      
           if (error.response.status === 422) {
             this.errors = error.response.data.errors || {};
-              
-
           }
         });
- 
 
-            /* .catch (error => {
-                 this.form.errors.all();
-            }) */
+    },
 
-
-
-       },
-
-          editModal(employee)
-          {
-         this.editMode =true;
-         this.form.reset();
-          $("#addCourse").modal("show");
-           this.form.fill(employee);
-
-          },
+    editModal(employee) {
+      this.editMode = true;
+      this.form.reset();
+      $("#addCourse").modal("show");
+      this.form.fill(employee);
+    },
 
     deleteEmployee(id) {
-            Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                    }).then((result) => {
-                    if (result.isConfirmed) {
-                       this.form.delete('api/employees/'+id).then(()=>{
-
-                          Swal.fire(
-                        'Deleted!',
-                        'Employee has been deleted.',
-                        'success'
-                        )
-                           this.getEmployeesList();
-
-                       }).catch(()=>{
-
-                      Swal.fire("Failed","something went wrong!");
-
-
-
-                       })
-
-
-                        
-                    }
-                    })
-            
-          },
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.form
+            .delete("api/employees/" + id)
+            .then(() => {
+              Swal.fire("Deleted!", "Employee has been deleted.", "success");
+              this.getEmployeesList();
+            })
+            .catch(() => {
+              Swal.fire("Failed", "something went wrong!");
+            });
+        }
+      });
+    },
 
     newModal() {
-      this.editMode = false,
-       this.form.reset();
+      (this.editMode = false), this.form.reset();
       $("#addCourse").modal("show");
     },
     //this function is only for grabbing the file/image
@@ -376,12 +344,6 @@ export default {
       this.form.logo = logo;
     },
     CreateEmployee() {
-      // let formData = new FormData();
-      //  formData.append('title', this.form.title);
-      // formData.append('description', this.form.description);
-      //  formData.append('logo', this.logo);
-      // console.log(formData.append('file',this.file));
-
       this.form
         .post("employees")
         .then((Response) => {
@@ -401,36 +363,28 @@ export default {
         .catch((Response) => {
           this.$Progress.fail();
         });
-      //  console.log('I am coming here in the createUser');
     },
-  
-         getEmployeesList() {
-           axios.get('api/employees')
-         //  .then(response => this.employees = response.data);
-          .then(({ data }) => (this.employees = data));
-         
-                  // console.log(response.data);
-              },
-              getCompaniesList() {
-           axios.get('api/companies')
-          //  .then(response => this.companies = response.data);
-            .then(({ data }) => (this.companies = data));
-                   //console.log(response);
-              }
 
+    getEmployeesList() {
+      axios
+        .get("api/employees")
+        //  .then(response => this.employees = response.data);
+        .then(({ data }) => (this.employees = data));
+
+      // console.log(response.data);
+    },
+    getCompaniesList() {
+      axios
+        .get("api/companies")
+        //  .then(response => this.companies = response.data);
+        .then(({ data }) => (this.companies = data));
+      //console.log(response);
+    },
   },
   mounted() {
-      this.getEmployeesList();
-      this.getCompaniesList();
-     // console.log('I am here in the ready');
+    this.getEmployeesList();
+    this.getCompaniesList();
+    // console.log('I am here in the ready');
   },
-  /* computed: {
-   strippedDescription: function(){
-      if(this.form.description.length > 10) {
-         return this.form.description.slice(0,30);
-      }
-      return this.form.description;
-   }
-} */
-}
+};
 </script>

@@ -36,16 +36,8 @@ class EmployeeController extends Controller
      */
     public function store(StoreEmployeeRequest $request)
     {
-            //  return ['message'=>'I am here in the store of employee from web route'];
-
-       $company =$request->company;
-       //  dd($company);
-
-    
+     
      $validated = $request->validated();
-
-
-
          $Employee = Employee::create([
                  'firstname' => $request->firstname,
                  'lastname' => $request->lastname,
@@ -55,8 +47,6 @@ class EmployeeController extends Controller
              ]);
             return ['message'=>'Employee Added successfully.'];
      
-     
-
     }
 
     /**

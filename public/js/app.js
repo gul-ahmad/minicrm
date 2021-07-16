@@ -2039,6 +2039,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2047,7 +2072,7 @@ __webpack_require__.r(__webpack_exports__);
       errors: {},
       companies: {},
       //used EditMode here beacuse I am using one popup modal for both create and update forms
-      //So edit mode is used 
+      //So edit mode is used
       editMode: false,
       form: new vform__WEBPACK_IMPORTED_MODULE_0__.default({
         id: "",
@@ -2063,46 +2088,43 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/companies?page=' + page).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/companies?page=" + page).then(function (response) {
         _this.companies = response.data;
       });
     },
     updateCompany: function updateCompany() {
       var _this2 = this;
 
-      this.errors = {}; //I am sending the form values using append method becuse the ther ways were not working for put action
-      //after appending the form values i am sending them as argument in axios.post
+      this.errors = {}; //after appending the form values i am sending them as argument in axios.post
 
       var formData = new FormData();
-      formData.append('name', this.form.name);
+      formData.append("name", this.form.name);
 
       if (!this.form.email) {
-        formData.append('email', '');
+        formData.append("email", "");
       } else {
-        formData.append('email', this.form.email);
+        formData.append("email", this.form.email);
       }
 
       if (!this.form.website) {
-        formData.append('website', '');
+        formData.append("website", "");
       } else {
-        formData.append('website', this.form.website);
+        formData.append("website", this.form.website);
       }
 
-      formData.append('logo', this.form.logo); //   formData.append('website', this.form.website);
-
-      formData.append('_method', 'put'); // console.log(formData.append('file',this.file));
+      formData.append("logo", this.form.logo);
+      formData.append("_method", "put"); // console.log(formData.append('file',this.file));
       //   console.log(this.form.email);
       //  console.log(this.form.website);
 
-      this.$Progress.start(); //here i have used the post way of axios as put does not work 
-      //to tell about the put method i have declared the put in the append above like we do in laravel
+      this.$Progress.start(); //to tell about the put method i have declared the put in the append above like we do in laravel
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post('api/companies/' + this.form.id, formData).then(function () {
-        $('#addCourse').modal('hide');
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/companies/" + this.form.id, formData).then(function () {
+        $("#addCourse").modal("hide");
 
         _this2.form.errors.clear();
 
-        Swal.fire('updated!', 'Company Updated Successfully.', 'success');
+        Swal.fire("updated!", "Company Updated Successfully.", "success");
 
         _this2.$Progress.finish(); //last added this
 
@@ -2110,26 +2132,13 @@ __webpack_require__.r(__webpack_exports__);
         _this2.form.errors.clear();
 
         _this2.getCompaniesList();
-      })
-      /* .catch((error)=>{
-        this.errors = errors.response.data.errors
-        Swal.fire("Failed","Something went wrong!","warning")
-        }) */
-      //last added this
-      ["catch"](function (error) {
-        _this2.loaded = true; //I have used this IF condition here becuase VForm error message was not displaying on validation 
-        //failure....VFORM valiation error were showing only this.form.post but not on axios.post so 
-        //I used this way to grab the errors and shows them in the form using this below way
-
-        /*  <div v-if="errors && errors.description" class="text-danger">{{ errors.description[0] }}</div> */
+      })["catch"](function (error) {
+        _this2.loaded = true;
 
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors || {};
         }
       });
-      /* .catch (error => {
-           this.form.errors.all();
-      }) */
     },
     editModal: function editModal(company) {
       this.editMode = true;
@@ -2141,17 +2150,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this3.form["delete"]('api/companies/' + id).then(function () {
-            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+          _this3.form["delete"]("api/companies/" + id).then(function () {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
 
             _this3.getCompaniesList();
           })["catch"](function () {
@@ -2173,11 +2182,6 @@ __webpack_require__.r(__webpack_exports__);
     createSeries: function createSeries() {
       var _this4 = this;
 
-      // let formData = new FormData();
-      //  formData.append('title', this.form.title);
-      // formData.append('description', this.form.description);
-      //  formData.append('logo', this.logo);
-      // console.log(formData.append('file',this.file));
       this.form.post("companies").then(function (Response) {
         Swal.fire({
           position: "top-end",
@@ -2203,31 +2207,16 @@ __webpack_require__.r(__webpack_exports__);
     getCompaniesList: function getCompaniesList() {
       var _this5 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/companies') //  .then(response => this.companies = response.data);
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/companies") //  .then(response => this.companies = response.data);
       .then(function (_ref) {
         var data = _ref.data;
         return _this5.companies = data;
       }); //console.log(response);
     }
-    /*  getSeriesDropDown(){
-        axios.get('api/courses')
-        .then(response.data =data.response)
-         } 
-    */
-
   },
   mounted: function mounted() {
     this.getCompaniesList(); // console.log('I am here in the ready');
   }
-  /* computed: {
-   strippedDescription: function(){
-      if(this.form.description.length > 10) {
-         return this.form.description.slice(0,30);
-      }
-      return this.form.description;
-   }
-  } */
-
 });
 
 /***/ }),
@@ -2471,6 +2460,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2480,8 +2499,6 @@ __webpack_require__.r(__webpack_exports__);
       employees: {},
       results: {},
       companies: [],
-      //used EditMode here beacuse I am using one popup modal for both create and update forms
-      //So edit mode is used 
       editMode: false,
       form: new vform__WEBPACK_IMPORTED_MODULE_0__.default({
         id: "",
@@ -2498,51 +2515,47 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/employees?page=' + page).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/employees?page=" + page).then(function (response) {
         _this.employees = response.data;
       });
     },
     updateEmployee: function updateEmployee() {
       var _this2 = this;
 
-      this.errors = {}; //I am sending the form values using append method becuse the ther ways were not working for put action
-      //after appending the form values i am sending them as argument in axios.post
-
+      this.errors = {};
       var formData = new FormData();
-      formData.append('firstname', this.form.firstname);
-      formData.append('lastname', this.form.lastname);
+      formData.append("firstname", this.form.firstname);
+      formData.append("lastname", this.form.lastname);
 
       if (!this.form.company) {
-        formData.append('company', '');
+        formData.append("company", "");
       } else {
-        formData.append('company', this.form.company);
+        formData.append("company", this.form.company);
       }
 
       if (!this.form.email) {
-        formData.append('email', '');
+        formData.append("email", "");
       } else {
-        formData.append('email', this.form.email);
+        formData.append("email", this.form.email);
       }
 
       if (!this.form.phone) {
-        formData.append('phone', '');
+        formData.append("phone", "");
       } else {
-        formData.append('phone', this.form.phone);
+        formData.append("phone", this.form.phone);
       }
 
-      formData.append('_method', 'put'); // console.log(formData.append('file',this.file));
+      formData.append("_method", "put"); // console.log(formData.append('file',this.file));
       //   console.log(this.form.email);
       //  console.log(this.form.website);
 
-      this.$Progress.start(); //here i have used the post way of axios as put does not work 
-      //to tell about the put method i have declared the put in the append above like we do in laravel
-
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post('api/employees/' + this.form.id, formData).then(function () {
-        $('#addCourse').modal('hide');
+      this.$Progress.start();
+      axios__WEBPACK_IMPORTED_MODULE_1___default().post("api/employees/" + this.form.id, formData).then(function () {
+        $("#addCourse").modal("hide");
 
         _this2.form.errors.clear();
 
-        Swal.fire('updated!', 'employee Updated Successfully.', 'success');
+        Swal.fire("updated!", "employee Updated Successfully.", "success");
 
         _this2.$Progress.finish(); //last added this
 
@@ -2550,26 +2563,14 @@ __webpack_require__.r(__webpack_exports__);
         _this2.form.errors.clear();
 
         _this2.getEmployeesList();
-      })
-      /* .catch((error)=>{
-        this.errors = errors.response.data.errors
-        Swal.fire("Failed","Something went wrong!","warning")
-        }) */
-      //last added this
+      }) //last added this
       ["catch"](function (error) {
-        _this2.loaded = true; //I have used this IF condition here becuase VForm error message was not displaying on validation 
-        //failure....VFORM valiation error were showing only this.form.post but not on axios.post so 
-        //I used this way to grab the errors and shows them in the form using this below way
-
-        /*  <div v-if="errors && errors.description" class="text-danger">{{ errors.description[0] }}</div> */
+        _this2.loaded = true;
 
         if (error.response.status === 422) {
           _this2.errors = error.response.data.errors || {};
         }
       });
-      /* .catch (error => {
-           this.form.errors.all();
-      }) */
     },
     editModal: function editModal(employee) {
       this.editMode = true;
@@ -2581,17 +2582,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
       }).then(function (result) {
         if (result.isConfirmed) {
-          _this3.form["delete"]('api/employees/' + id).then(function () {
-            Swal.fire('Deleted!', 'Employee has been deleted.', 'success');
+          _this3.form["delete"]("api/employees/" + id).then(function () {
+            Swal.fire("Deleted!", "Employee has been deleted.", "success");
 
             _this3.getEmployeesList();
           })["catch"](function () {
@@ -2613,11 +2614,6 @@ __webpack_require__.r(__webpack_exports__);
     CreateEmployee: function CreateEmployee() {
       var _this4 = this;
 
-      // let formData = new FormData();
-      //  formData.append('title', this.form.title);
-      // formData.append('description', this.form.description);
-      //  formData.append('logo', this.logo);
-      // console.log(formData.append('file',this.file));
       this.form.post("employees").then(function (Response) {
         Swal.fire({
           position: "top-end",
@@ -2638,12 +2634,12 @@ __webpack_require__.r(__webpack_exports__);
         _this4.getEmployeesList();
       })["catch"](function (Response) {
         _this4.$Progress.fail();
-      }); //  console.log('I am coming here in the createUser');
+      });
     },
     getEmployeesList: function getEmployeesList() {
       var _this5 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/employees') //  .then(response => this.employees = response.data);
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/employees") //  .then(response => this.employees = response.data);
       .then(function (_ref) {
         var data = _ref.data;
         return _this5.employees = data;
@@ -2652,7 +2648,7 @@ __webpack_require__.r(__webpack_exports__);
     getCompaniesList: function getCompaniesList() {
       var _this6 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('api/companies') //  .then(response => this.companies = response.data);
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get("api/companies") //  .then(response => this.companies = response.data);
       .then(function (_ref2) {
         var data = _ref2.data;
         return _this6.companies = data;
@@ -2663,15 +2659,6 @@ __webpack_require__.r(__webpack_exports__);
     this.getEmployeesList();
     this.getCompaniesList(); // console.log('I am here in the ready');
   }
-  /* computed: {
-   strippedDescription: function(){
-      if(this.form.description.length > 10) {
-         return this.form.description.slice(0,30);
-      }
-      return this.form.description;
-   }
-  } */
-
 });
 
 /***/ }),
@@ -43173,7 +43160,14 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [
                       _c("img", {
-                        attrs: { src: company.logo, alt: "", title: "" }
+                        staticStyle: { width: "100px,height:100px" },
+                        attrs: {
+                          src: "/storage/" + company.logo,
+                          width: "35 px",
+                          height: "23px",
+                          alt: "",
+                          title: ""
+                        }
                       })
                     ]),
                     _vm._v(" "),
@@ -43244,7 +43238,43 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode,
+                        expression: "!editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addCourseModalLabel" }
+                  },
+                  [_vm._v("\n            Add Company\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("\n            Update Company\n          ")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -43308,7 +43338,11 @@ var render = function() {
                           _vm._v(" "),
                           _vm.errors && _vm.errors.name
                             ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.name[0]))
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.name[0]) +
+                                    "\n                "
+                                )
                               ])
                             : _vm._e()
                         ],
@@ -43363,7 +43397,11 @@ var render = function() {
                           _vm._v(" "),
                           _vm.errors && _vm.errors.email
                             ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.email[0]))
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.email[0]) +
+                                    "\n                "
+                                )
                               ])
                             : _vm._e()
                         ],
@@ -43402,7 +43440,11 @@ var render = function() {
                           _vm._v(" "),
                           _vm.errors && _vm.errors.logo
                             ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.logo[0]))
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.logo[0]) +
+                                    "\n                "
+                                )
                               ])
                             : _vm._e(),
                           _vm._v(" "),
@@ -43471,7 +43513,11 @@ var render = function() {
                           _vm._v(" "),
                           _vm.errors && _vm.errors.website
                             ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.website[0]))
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.website[0]) +
+                                    "\n                "
+                                )
                               ])
                             : _vm._e()
                         ],
@@ -43479,7 +43525,58 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("\n                Close\n              ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.editMode,
+                              expression: "!editMode"
+                            }
+                          ],
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Save changes\n              "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.editMode,
+                              expression: "editMode"
+                            }
+                          ],
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Update changes\n              "
+                          )
+                        ]
+                      )
+                    ])
                   ]
                 )
               ])
@@ -43511,47 +43608,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "addCourseModalLabel" } },
-        [_vm._v("Add Company")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("\n                Close\n              ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("\n                Save changes\n              ")]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true
@@ -43656,7 +43724,15 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(employee.lastname))]),
                     _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(employee.company.name))]),
+                    employee.company.name !== null
+                      ? _c("td", [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(employee.company.name) +
+                              "\n                "
+                          )
+                        ])
+                      : _c("td", [_vm._v(_vm._s("Not available"))]),
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(employee.email))]),
                     _vm._v(" "),
@@ -43727,7 +43803,43 @@ var render = function() {
           { staticClass: "modal-dialog", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: !_vm.editMode,
+                        expression: "!editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "addCourseModalLabel" }
+                  },
+                  [_vm._v("\n            Add Employee\n          ")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.editMode,
+                        expression: "editMode"
+                      }
+                    ],
+                    staticClass: "modal-title",
+                    attrs: { id: "exampleModalLabel" }
+                  },
+                  [_vm._v("\n            Update Employee\n          ")]
+                ),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c(
@@ -43797,7 +43909,11 @@ var render = function() {
                           _vm._v(" "),
                           _vm.errors && _vm.errors.firstname
                             ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.firstname[0]))
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.firstname[0]) +
+                                    "\n                "
+                                )
                               ])
                             : _vm._e()
                         ],
@@ -43859,7 +43975,11 @@ var render = function() {
                           _vm._v(" "),
                           _vm.errors && _vm.errors.lastname
                             ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.lastname[0]))
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.lastname[0]) +
+                                    "\n                "
+                                )
                               ])
                             : _vm._e()
                         ],
@@ -43889,7 +44009,11 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          attrs: { name: "company", id: "company" },
+                          attrs: {
+                            name: "company",
+                            id: "company",
+                            required: ""
+                          },
                           on: {
                             change: function($event) {
                               var $$selectedVal = Array.prototype.filter
@@ -43920,7 +44044,13 @@ var render = function() {
                                 selected: company.name
                               }
                             },
-                            [_vm._v(_vm._s(company.name))]
+                            [
+                              _vm._v(
+                                "\n                  " +
+                                  _vm._s(company.name) +
+                                  "\n                "
+                              )
+                            ]
                           )
                         }),
                         0
@@ -43974,7 +44104,11 @@ var render = function() {
                           _vm._v(" "),
                           _vm.errors && _vm.errors.email
                             ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.email[0]))
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.email[0]) +
+                                    "\n                "
+                                )
                               ])
                             : _vm._e()
                         ],
@@ -44029,7 +44163,11 @@ var render = function() {
                           _vm._v(" "),
                           _vm.errors && _vm.errors.phone
                             ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(_vm._s(_vm.errors.phone[0]))
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.errors.phone[0]) +
+                                    "\n                "
+                                )
                               ])
                             : _vm._e()
                         ],
@@ -44037,7 +44175,58 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _c("div", { staticClass: "modal-footer" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary",
+                          attrs: { type: "button", "data-dismiss": "modal" }
+                        },
+                        [_vm._v("\n                Close\n              ")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.editMode,
+                              expression: "!editMode"
+                            }
+                          ],
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Save changes\n              "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.editMode,
+                              expression: "editMode"
+                            }
+                          ],
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                Update changes\n              "
+                          )
+                        ]
+                      )
+                    ])
                   ]
                 )
               ])
@@ -44071,47 +44260,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "addCourseModalLabel" } },
-        [_vm._v("Add Employee")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("\n                Close\n              ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("\n                Save changes\n              ")]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true

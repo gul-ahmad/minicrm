@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Validator;
+
 
 class StoreEmployeeRequest extends FormRequest
 {
@@ -24,10 +26,10 @@ class StoreEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'firstname' => 'required', 'string', 'max:22',
-            'lastname' => 'required','string','max:22', 
+            'firstname' => 'required|string|max:50',
+            'lastname' => 'required|string|max:50', 
             'company_id' => 'nullable',
-            'email' => 'nullable','string', 'email', 'max:255', 'unique:employees',
+            'email' => 'nullable|string|email|max:50|unique:employees,email,' . $this->id,
             'phone' => 'nullable|regex:/[0-9]{13}/',
 
 
