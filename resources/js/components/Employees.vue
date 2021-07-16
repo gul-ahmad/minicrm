@@ -385,6 +385,7 @@ export default {
     this.getEmployeesList();
     this.getCompaniesList();
     // console.log('I am here in the ready');
+        // console.log('I am here in the ready');
   },
 };
 </script>

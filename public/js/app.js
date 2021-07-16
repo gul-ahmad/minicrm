@@ -2658,6 +2658,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getEmployeesList();
     this.getCompaniesList(); // console.log('I am here in the ready');
+    // console.log('I am here in the ready');
   }
 });
 
