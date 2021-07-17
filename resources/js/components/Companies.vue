@@ -132,21 +132,21 @@
                   </div>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="logo" class="col-form-label">Logo</label>
+              <div v-show="!editMode" class="form-group">
+                <label for="logo1" class="col-form-label">Logo</label>
                 <div class="">
                   <input
                     type="file"
                     v-on:change="onFileChange"
-                    name="logo"
+                    name="logo1"
                     class="form-control"
-                    id="logo"
+                    id="logo1"
                     placeholder="Logo"
                   />
-
-                  <HasError :form="form" field="logo" />
-                  <div v-if="errors && errors.logo" class="text-danger">
-                    {{ errors.logo[0] }}
+                 <!--  <input type="hidden" value="form.logo1"> -->
+                  <HasError :form="form" field="logo1" />
+                  <div v-if="errors && errors.logo1" class="text-danger">
+                    {{ errors.logo1[0] }}
                   </div>
                   <div v-if="form.progress">
                     Progress: {{ form.progress.percentage }}%
@@ -170,6 +170,41 @@
                   </div>
                 </div>
               </div>
+
+          <div v-show="editMode" class="form-group">
+               <label for="logo2" class="col-form-label">Logo New</label>
+                <div class="">
+                  <input
+                    type="file"
+                    v-on:change="onFileChange2"
+                    name="logo2"
+                    class="form-control"
+                    id="logo2"
+                  />
+                 <!--  <input type="hidden" value="form.logo1"> -->
+                  <HasError :form="form" field="logo2" />
+                  <div v-if="errors && errors.logo2" class="text-danger">
+                    {{ errors.logo2[0] }}
+                  </div>
+                  <div v-if="form.progress">
+                    Progress: {{ form.progress.percentage }}%
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
               <div class="modal-footer">
                 <button
@@ -213,8 +248,10 @@ export default {
         id: "",
         name: "",
         email: "",
-        logo: null,
+        logo1: null,
+        logo2: null,
         website: "",
+        logohide:"",
       }),
     };
   },
@@ -241,7 +278,13 @@ export default {
         formData.append("website", this.form.website);
       }
 
-      formData.append("logo", this.form.logo);
+      if (!this.form.logo2) {
+        formData.append("logo2", "");
+      } else {
+        formData.append("logo2", this.form.logo2);
+      }
+
+     // formData.append("logo2", this.form.logo2);
 
       formData.append("_method", "put");
       // console.log(formData.append('file',this.file));
@@ -313,9 +356,14 @@ export default {
     },
     //this function is only for grabbing the file/image
     onFileChange(event) {
-      const logo = event.target.files[0];
+      const logo1 = event.target.files[0];
       // Set the file object onto the form...
-      this.form.logo = logo;
+      this.form.logo1 = logo1;
+    },
+     onFileChange2(event) {
+      const logo2 = event.target.files[0];
+      // Set the file object onto the form...
+      this.form.logo2 = logo2;
     },
     createSeries() {
       this.form

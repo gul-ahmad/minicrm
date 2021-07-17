@@ -22,6 +22,7 @@ class Company extends Model
 
 
     }
+  
     
 
 

@@ -2064,6 +2064,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2078,8 +2113,10 @@ __webpack_require__.r(__webpack_exports__);
         id: "",
         name: "",
         email: "",
-        logo: null,
-        website: ""
+        logo1: null,
+        logo2: null,
+        website: "",
+        logohide: ""
       })
     };
   },
@@ -2112,7 +2149,13 @@ __webpack_require__.r(__webpack_exports__);
         formData.append("website", this.form.website);
       }
 
-      formData.append("logo", this.form.logo);
+      if (!this.form.logo2) {
+        formData.append("logo2", "");
+      } else {
+        formData.append("logo2", this.form.logo2);
+      } // formData.append("logo2", this.form.logo2);
+
+
       formData.append("_method", "put"); // console.log(formData.append('file',this.file));
       //   console.log(this.form.email);
       //  console.log(this.form.website);
@@ -2175,9 +2218,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     //this function is only for grabbing the file/image
     onFileChange: function onFileChange(event) {
-      var logo = event.target.files[0]; // Set the file object onto the form...
+      var logo1 = event.target.files[0]; // Set the file object onto the form...
 
-      this.form.logo = logo;
+      this.form.logo1 = logo1;
+    },
+    onFileChange2: function onFileChange2(event) {
+      var logo2 = event.target.files[0]; // Set the file object onto the form...
+
+      this.form.logo2 = logo2;
     },
     createSeries: function createSeries() {
       var _this4 = this;
@@ -43410,58 +43458,72 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "label",
-                        {
-                          staticClass: "col-form-label",
-                          attrs: { for: "logo" }
-                        },
-                        [_vm._v("Logo")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {},
-                        [
-                          _c("input", {
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "file",
-                              name: "logo",
-                              id: "logo",
-                              placeholder: "Logo"
-                            },
-                            on: { change: _vm.onFileChange }
-                          }),
-                          _vm._v(" "),
-                          _c("HasError", {
-                            attrs: { form: _vm.form, field: "logo" }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors && _vm.errors.logo
-                            ? _c("div", { staticClass: "text-danger" }, [
-                                _vm._v(
-                                  "\n                  " +
-                                    _vm._s(_vm.errors.logo[0]) +
-                                    "\n                "
-                                )
-                              ])
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.form.progress
-                            ? _c("div", [
-                                _vm._v(
-                                  "\n                  Progress: " +
-                                    _vm._s(_vm.form.progress.percentage) +
-                                    "%\n                "
-                                )
-                              ])
-                            : _vm._e()
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.editMode,
+                            expression: "!editMode"
+                          }
                         ],
-                        1
-                      )
-                    ]),
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "col-form-label",
+                            attrs: { for: "logo1" }
+                          },
+                          [_vm._v("Logo")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {},
+                          [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "file",
+                                name: "logo1",
+                                id: "logo1",
+                                placeholder: "Logo"
+                              },
+                              on: { change: _vm.onFileChange }
+                            }),
+                            _vm._v(" "),
+                            _c("HasError", {
+                              attrs: { form: _vm.form, field: "logo1" }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.logo1
+                              ? _c("div", { staticClass: "text-danger" }, [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(_vm.errors.logo1[0]) +
+                                      "\n                "
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.form.progress
+                              ? _c("div", [
+                                  _vm._v(
+                                    "\n                  Progress: " +
+                                      _vm._s(_vm.form.progress.percentage) +
+                                      "%\n                "
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group" }, [
                       _c(
@@ -43525,6 +43587,72 @@ var render = function() {
                         1
                       )
                     ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.editMode,
+                            expression: "editMode"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c(
+                          "label",
+                          {
+                            staticClass: "col-form-label",
+                            attrs: { for: "logo2" }
+                          },
+                          [_vm._v("Logo New")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {},
+                          [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                type: "file",
+                                name: "logo2",
+                                id: "logo2"
+                              },
+                              on: { change: _vm.onFileChange2 }
+                            }),
+                            _vm._v(" "),
+                            _c("HasError", {
+                              attrs: { form: _vm.form, field: "logo2" }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors && _vm.errors.logo2
+                              ? _c("div", { staticClass: "text-danger" }, [
+                                  _vm._v(
+                                    "\n                  " +
+                                      _vm._s(_vm.errors.logo2[0]) +
+                                      "\n                "
+                                  )
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.form.progress
+                              ? _c("div", [
+                                  _vm._v(
+                                    "\n                  Progress: " +
+                                      _vm._s(_vm.form.progress.percentage) +
+                                      "%\n                "
+                                  )
+                                ])
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ]
+                    ),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-footer" }, [
                       _c(

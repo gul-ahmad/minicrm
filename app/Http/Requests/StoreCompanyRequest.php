@@ -7,6 +7,8 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 
 use Illuminate\Validation\Rule;
+use App\Models\Company;
+
 
 
 class StoreCompanyRequest extends FormRequest
@@ -33,8 +35,10 @@ class StoreCompanyRequest extends FormRequest
         return [
             'name' =>'required|string|max:255',
             'email' => 'nullable|string|email|max:255|unique:companies,email,' . $this->id,
-           'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100',
+           'logo1' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100',
            //   'logo' => 'nullable|sometimes|image|mimes:jpg,png,jpeg,gif,svg|dimensions:max_width=100,max_height=100',
+           'logo2' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|dimensions:min_width=100,min_height=100',
+
   
             'website' => 'nullable|string|max:50'
         ];
@@ -43,7 +47,9 @@ class StoreCompanyRequest extends FormRequest
     public function messages()
     {
         return [
-            'logo.dimensions' => 'Logo must be atleast 100*100px',
+            'logo1.dimensions' => 'Logo must be atleast 100*100px',
+            'logo2.dimensions' => 'Logo must be atleast 100*100px',
+
             
         ];
     }

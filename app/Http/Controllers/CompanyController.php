@@ -49,8 +49,8 @@ class CompanyController extends Controller
     {
         $validated = $request->validated();
         $logo = null;
-        if($request->hasFile('logo'))  {
-           $logo = $request->file('logo')->store('', 'public');
+        if($request->hasFile('logo1'))  {
+           $logo = $request->file('logo1')->store('', 'public');
         }
    $Companies = Company::create([
             'name' => $request->name,
