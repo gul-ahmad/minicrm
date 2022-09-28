@@ -20,7 +20,7 @@ This is basically a mini CRM project built on Laravel and Vue js.
 - Progress bar
 - and few more
 ## License
-This project is built a
+Free
 
 ## Developer
 Gul Muhammad
